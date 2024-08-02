@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { API_URL } from "../../utility/constant";
+import { Link } from "react-router-dom";
 const Allproductcontainer = () => {
   const [allProduct, SetAllProduct] = useState();
   const [allCategories, SetAllCategories] = useState();
@@ -56,9 +57,9 @@ const Allproductcontainer = () => {
   return (
     filteredProduct && (
       <div className="product-container w-full h-full mt-4 flex gap-2 p-4">
-        <div className="left-section w-2/12 min-h-full border border-black bg-gray">
+        <div className="left-section w-2/12 h-full border border-black bg-gray min-w-[200px] mobile:hidden laptop:block">
           <h2>Filter</h2>
-          <div className="p-2">
+          <div className="p-2 ">
             <form action="" onSubmit={(e) => handleSubmit(e)}>
               {allCategories?.map((category, index) => {
                 return (
@@ -80,32 +81,55 @@ const Allproductcontainer = () => {
               })}
               <input
                 type="submit"
-                className="p-1 bg-blue-900 rounded-md text-white"
+                className="p-2 w-full my-2 cursor-pointer flex justify-center items-center  bg-blue-900 rounded-md text-white"
                 value="Apply"
               />
             </form>
           </div>
         </div>
-        <div className="right-section flex w-10/12 justify-around flex-wrap gap-2 ">
+        <div className="right-section flex w-10/12 justify-around flex-wrap gap-2 mobile:w-full laptop:w-10/12">
           {filteredProduct &&
             filteredProduct.map((product, index) => {
               console.log(product);
               return (
+                // <Link
+                //   to={"/product/" + product.id}
+                //   className="w-full"
+                //   key={index}
+                // >
                 <div
-                  className="product-card w-[250px] border border-black rounded-md p-2"
                   key={index}
+                  className="product-card w-full flex gap-4 h-[200px] border-2 border-gray-200
+                   rounded-md p-2 shadow-sm"
                 >
-                  <img
-                    src={product.image}
-                    className="w-full aspect-square object-contain"
-                    alt={product.name}
-                  />
-                  <div className="product-info w-full">
-                    <div className="product-name  w-full">{product.title}</div>
-                    <div className="product-price">${product.price}</div>
+                  <Link
+                    to={"/product/" + product.id}
+                    className="p-2 aspect-square object-contain"
+                  >
+                    <img
+                      src={product.image}
+                      className="aspect-square object-contain "
+                      alt={product.name}
+                    />
+                  </Link>
+                  <div className="product-info w-full text-left p-2 relative">
+                    <Link to={"/product/" + product.id}>
+                      <div className="product-name  w-full text-2xl hover:text-gray-400">
+                        {product.title}
+                      </div>
+                    </Link>
+                    <div className="product-price  font-bold text-lg ">
+                      ₹{(product?.price * 83.71)?.toFixed(2)}
+                    </div>
                     <div>{product.category}</div>
+                    <div className="add-to-cart-btn absolute bottom-2 left-3">
+                      <button className="p-2 rounded-lg  bg-blue-900 text-white">
+                        add to cart
+                      </button>
+                    </div>
                   </div>
                 </div>
+                // </Link>
               );
             })}
         </div>

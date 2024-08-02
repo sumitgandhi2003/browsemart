@@ -1,10 +1,21 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 const Navbar = () => {
+  const [isShow, SetIsShow] = useState(false);
   return (
-    <div className="nav-bar flex justify-between items-center w-full p-3 bg-blue-900">
-      <div className="logo text-2xl text-white font-bold">BrowseMart</div>
+    <div className="nav-bar flex justify-between items-center w-full h-16 p-3 bg-blue-900">
+      <div
+        className="logo text-2xl text-white font-bold"
+        onClick={() => SetIsShow(!isShow)}
+      >
+        BrowseMart
+      </div>
       <div className="input w-5/12 border border-white">Input</div>
-      <div className="links flex gap-4 justify-around text-white font-semibold text-lg">
+      <div
+        className={`links flex gap-4 justify-around text-white font-semibold text-lg mobile:${
+          isShow ? "block" : "hidden"
+        } mobile:absolute mobile:top-16 mobile:left-0 mobile:w-full mobile:text-left mobile:p-2 mobile:bg-blue-900 tablet:flex tablet:top-0 tablet:relative`}
+      >
         <Link to={"/"}>
           <div>Home</div>
         </Link>
